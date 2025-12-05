@@ -5,6 +5,6 @@ import gleam/string
 fn get_line_unwrapped(prompt: String) -> String
 
 pub fn get_line(prompt: String) -> String {
-    get_line_unwrapped(prompt)
-    |> string.trim_end()
+  get_line_unwrapped(prompt)
+  |> string.trim_end()
 }
