@@ -3,13 +3,15 @@ import gleam/dict.{type Dict}
 import gleam/io
 import gleam/string
 import hello/hello
+import mario_more/mario
 
 // TODO make comprehensive
 pub type ProjectDict =
   Dict(String, fn() -> Nil)
 
 pub fn main() -> Nil {
-  let project_dict: ProjectDict = dict.from_list([#("hello", hello.main)])
+  let project_dict: ProjectDict =
+    dict.from_list([#("hello", hello.main), #("mario", mario.main)])
 
   dict.keys(project_dict)
   |> string.join(", ")
