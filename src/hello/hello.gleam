@@ -2,7 +2,7 @@ import externs.{get_line}
 import gleam/io
 
 pub fn main() -> Nil {
-  get_line("Enter your name: ")
+  get_line("What's your name? ")
   |> greet
 }
 
