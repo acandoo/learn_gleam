@@ -26,15 +26,14 @@ fn project_message(projects: String) -> String {
 }
 
 fn get_project(projects: ProjectDict) -> fn() -> Nil {
-  get_line("Enter project name: ")
-  |> dict.get(projects, _)
-  |> fn(a) {
-    case a {
-      Ok(project) -> project
-      Error(_) -> {
-        io.println("Project not found")
-        get_project(projects)
-      }
+  let main_fn =
+    get_line("Enter project name: ")
+    |> dict.get(projects, _)
+  case main_fn {
+    Ok(project) -> project
+    Error(_) -> {
+      io.println("Project not found")
+      get_project(projects)
     }
   }
 }
