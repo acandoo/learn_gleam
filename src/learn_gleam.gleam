@@ -1,3 +1,4 @@
+import credit/credit
 import externs.{get_line}
 import gleam/dict.{type Dict}
 import gleam/io
@@ -11,7 +12,11 @@ pub type ProjectDict =
 
 pub fn main() -> Nil {
   let project_dict: ProjectDict =
-    dict.from_list([#("hello", hello.main), #("mario", mario.main)])
+    dict.from_list([
+      #("hello", hello.main),
+      #("mario", mario.main),
+      #("credit", credit.main),
+    ])
 
   dict.keys(project_dict)
   |> string.join(", ")
