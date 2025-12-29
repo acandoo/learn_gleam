@@ -5,7 +5,9 @@ import gleam/list
 import gleam/string
 
 pub fn main() -> Nil {
-  prompt_number("Number: ")
+  use number <- prompt_number("Number: ")
+
+  number
   |> get_validity
   |> io.println
 }
@@ -43,8 +45,6 @@ fn check_luhn(number: Int, num_length: Int) -> Bool {
       #(number / right_pwr, number % right_pwr, num_length - 1)
     }
   }
-  echo "number: " <> int.to_string(number)
-  echo "numlength: " <> int.to_string(num_length)
 
   // check_luhn was split into two functions since we only want to do the max_safe_integer check once.
   number <= max_safe_integer && check_luhn_2(number, num_length, 0, right_acc)
@@ -96,15 +96,15 @@ fn check_visa(number: String) -> Bool {
   && string.slice(number, 0, 1) == "4"
 }
 
-fn prompt_number(prompt: String) -> #(String, Int) {
-  let input = get_line(prompt)
+fn prompt_number(prompt: String, callback: fn(#(String, Int)) -> Nil) -> Nil {
+  use input <- get_line(prompt)
   let input_int =
     input
     |> int.parse
 
   case input_int {
-    Ok(a) -> #(input, a)
-    Error(_) -> prompt_number(prompt)
+    Ok(a) -> callback(#(input, a))
+    Error(_) -> prompt_number(prompt, callback)
   }
 }
 

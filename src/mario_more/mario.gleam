@@ -5,7 +5,9 @@ import gleam/list
 import gleam/string
 
 pub fn main() -> Nil {
-  repeat_prompt("Height: ")
+  use input <- repeat_prompt("Height: ")
+
+  input
   |> make_pyramid(0)
   |> list.each(io.println)
 }
@@ -15,13 +17,12 @@ pub type InputError {
   NotANumber
 }
 
-fn repeat_prompt(input: String) -> Int {
-  let input_int =
-    get_line(input)
-    |> validate_input
+fn repeat_prompt(prompt: String, callback: fn(Int) -> Nil) -> Nil {
+  use input <- get_line(prompt)
+  let input_int = validate_input(input)
   case input_int {
-    Ok(a) -> a
-    Error(_) -> repeat_prompt(input)
+    Ok(a) -> callback(a)
+    Error(_) -> repeat_prompt(prompt, callback)
   }
 }
 
